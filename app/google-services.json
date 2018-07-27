@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "238521744054",
+    "firebase_url": "https://card-games-9eb70.firebaseio.com",
+    "project_id": "card-games-9eb70",
+    "storage_bucket": "card-games-9eb70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238521744054:android:52f79ab8339629d7",
+        "android_client_info": {
+          "package_name": "com.szczepaniak.dawid.cardgames"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238521744054-srck5i3dfi3oe7ioinhhe70ofubephnk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.szczepaniak.dawid.cardgames",
+            "certificate_hash": "1baab8201076885ce5306c95eea04dc14caa67dd"
+          }
+        },
+        {
+          "client_id": "238521744054-pv0b9rg2vkh4n2m49ctna9dkj6tqc6oo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfvC9csTVraoChqUUnXeihPVV5KTwRat0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238521744054-pv0b9rg2vkh4n2m49ctna9dkj6tqc6oo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
