@@ -16,6 +16,9 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private int gameID;
+
     LinearLayout cards;
     LinearLayout usedCards;
 
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Bundle extras = getIntent().getExtras();
+        gameID = extras.getInt("GameID");
 
         cards =  findViewById(R.id.Cards);
         usedCards =  findViewById(R.id.usedCards);
