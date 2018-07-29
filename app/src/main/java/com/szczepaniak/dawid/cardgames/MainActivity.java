@@ -1,6 +1,7 @@
 package com.szczepaniak.dawid.cardgames;
 
 import android.os.Debug;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,32 +12,76 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    private int gameID;
+    private String gameID;
 
-    LinearLayout cards;
-    LinearLayout usedCards;
+    private LinearLayout cards;
+    private LinearLayout usedCards;
 
-    ArrayList<Card> cardsList = new ArrayList<>();
-    ArrayList<Card> playerCards = new ArrayList<>();
+    private ArrayList<Card> cardsList = new ArrayList<>();
+    private ArrayList<Card> playerCards = new ArrayList<>();
+    private ArrayList<Integer> gameCardsIndex =  new ArrayList<>();
+
+    private String dataBaseIndexs;
+
+    private DeckDatabase deckDatabase;
+
+    FirebaseDatabase database;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Bundle extras = getIntent().getExtras();
-        gameID = extras.getInt("GameID");
+        gameID = extras.getString("GameID");
 
+        database = FirebaseDatabase.getInstance();
         cards =  findViewById(R.id.Cards);
         usedCards =  findViewById(R.id.usedCards);
-        DeckDatabase deckDatabase = new DeckDatabase(this);
-        cardsList = deckDatabase.getCards();
-        createCarts();
+        deckDatabase = new DeckDatabase(this);
+
+        database.getReference(gameID).child("gameCards").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                dataBaseIndexs = dataSnapshot.getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        database.getReference(gameID).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                getSupportActionBar().setTitle("" + dataSnapshot.getValue().toString());
+                cardsList = getGameCardsIndex();
+                createCarts();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+       // cardsList = getGameCardsIndex();
+        //cardsList =  deckDatabase.getCards();
     }
 
     void createCarts(){
@@ -73,6 +118,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    ArrayList<Card> getGameCardsIndex(){
+
+        ArrayList<Card> cards =  new ArrayList<>();
+
+
+        //dataBaseIndexs = database.getReference(gameID).child("gameCards").;
+        // dataBaseIndexs = database.getReference(gameID).child("gameCards").toString();
+        String[] indexs = dataBaseIndexs.split(", ");
+
+        for(String index : indexs){
+
+            int i = Integer.parseInt(index);
+            cards.add(deckDatabase.getCards().get(i));
+        }
+
+        return  cards;
+    }
+
 
 //    void removePlayerCard(int index){
 //
